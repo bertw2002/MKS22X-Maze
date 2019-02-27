@@ -3,7 +3,7 @@ import java.io.*;
 public class Maze{
 
 
-    private char[][]maze;
+    private char[][] maze;
     private boolean animate;//false by default
 
     /*Constructor loads a maze text file, and sets animate to false by default.
@@ -25,6 +25,10 @@ public class Maze{
     */
 
     public Maze(String filename) throws FileNotFoundException{
+      animate = false;
+      Scanner scanner = new Scanner(filename);
+      int row = 0;
+      while (scanner.hasNextLine())
         //COMPLETE CONSTRUCTOR
     }
 
