@@ -44,23 +44,24 @@ public class Maze{
         row++;
       }
       maze = new char[row][col];
-      while (scanner.hasNextLine()){
-        for (int x = 0; x < row; x++){
-          nextline = scanner.nextLine();
-          for (int y = 0; y < col; y++){
-            maze[x][y] = nextline.charAt(y);
-            if (maze[x][y] == 'E'){
-              countE++;
-              Ecol = y;
-              Erow = x;
-            }
-            if (maze[x][y] == 'S'){
-               countS++;
-               Scol = y;
-               Srow = x;
-            }
+      int x = 0;
+      Scanner scanner2 = new Scanner(fname);
+      while (scanner2.hasNextLine()){
+        nextline = scanner2.nextLine();
+        for (int y = 0; y < col; y++){
+          maze[x][y] = nextline.charAt(y);
+          if (maze[x][y] == 'E'){
+            countE++;
+            Ecol = y;
+            Erow = x;
+          }
+          if (maze[x][y] == 'S'){
+             countS++;
+             Scol = y;
+             Srow = x;
           }
         }
+        x++;
       }
       if (countE != 1) throw new IllegalStateException();
       if (countS != 1) throw new IllegalStateException();
