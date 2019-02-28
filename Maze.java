@@ -30,7 +30,8 @@ public class Maze{
 
     public Maze(String filename) throws FileNotFoundException{
       animate = false;
-      Scanner scanner = new Scanner(filename);
+      File fname = new File(filename);
+      Scanner scanner = new Scanner(fname);
       int row = 0;
       int col = 0;
       int countE = 0;
@@ -61,8 +62,8 @@ public class Maze{
           }
         }
       }
-      if (countE > 1 || countE == 0) throw new IllegalStateException();
-      if (countS > 1 || countS == 0) throw new IllegalStateException();
+      if (countE != 1) throw new IllegalStateException();
+      if (countS != 1) throw new IllegalStateException();
     }
 
 
