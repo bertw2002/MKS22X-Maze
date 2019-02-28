@@ -5,7 +5,11 @@ public class Maze{
 
     private char[][] maze;
     private boolean animate;//false by default
-
+    private int Erow;
+    private int Ecol;
+    private int Scol;
+    private int Srow;
+    private int numAts;
     /*Constructor loads a maze text file, and sets animate to false by default.
 
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -31,6 +35,7 @@ public class Maze{
       int col = 0;
       int countE = 0;
       int countS = 0;
+      numAts = 0;
       String nextline;
       while (scanner.hasNextLine()){
         nextline = scanner.nextLine();
@@ -43,8 +48,16 @@ public class Maze{
           nextline = scanner.nextLine();
           for (int y = 0; y < col; y++){
             maze[x][y] = nextline.charAt(y);
-            if (maze[x][y] == 'E') countE++;
-            if (maze[x][y] == 'S') countS++;
+            if (maze[x][y] == 'E'){
+              countE++;
+              Ecol = y;
+              Erow = x;
+            }
+            if (maze[x][y] == 'S'){
+               countS++;
+               Scol = y;
+               Srow = x;
+            }
           }
         }
       }
@@ -86,19 +99,18 @@ public class Maze{
 
     */
     public int solve(){
-
-            //find the location of the S.
-
-
-            //erase the S
-
-
-            //and start solving at the location of the s.
-
-            //return solve(???,???);
-
+      maze[Srow][Scol] = '@';
+      return solve(Srow, Scol);
     }
-
+    private boolean isSolved(){
+      for (int x = 0; x < maze.length; x++){
+        for (int y = 0; y < maze[0].length; x++){
+          if (maze[x][y] == ' ') return false;
+          if (maze[x][y] == '@') numAts++;
+        }
+      }
+      return numAts > 0;
+    }
     /*
       Recursive Solve function:
 
@@ -117,20 +129,24 @@ public class Maze{
         All visited spots that are part of the solution are changed to '@'
     */
     private int solve(int row, int col){ //you can add more parameters since this is private
+      if (isSolved()) return numAts;
+      if ()
+      //automatic animation! You are welcome. thanks
+      if(animate){
+
+          clearTerminal();
+          System.out.println(this);
+
+          wait(20);
+      }
+      //dir = direction
+      int[] dirx = [1, 1, -1, -1];
+      int[] diry = [1, -1, 1, -1];
+      for (int x = 0; x < 4; x++){
+        if ()
+      }
 
 
-        //automatic animation! You are welcome.
-        if(animate){
-
-            clearTerminal();
-            System.out.println(this);
-
-            wait(20);
-        }
-
-        //COMPLETE SOLVE
-
-        return -1; //so it compiles
     }
 
 
