@@ -99,17 +99,7 @@ public class Maze{
 
     */
     public int solve(){
-      maze[Srow][Scol] = '@';
       return solve(Srow, Scol);
-    }
-    private boolean isSolved(){
-      for (int x = 0; x < maze.length; x++){
-        for (int y = 0; y < maze[0].length; x++){
-          if (maze[x][y] == ' ') return false;
-          if (maze[x][y] == '@') numAts++;
-        }
-      }
-      return numAts > 0;
     }
     /*
       Recursive Solve function:
@@ -129,8 +119,6 @@ public class Maze{
         All visited spots that are part of the solution are changed to '@'
     */
     private int solve(int row, int col){ //you can add more parameters since this is private
-      if (isSolved()) return numAts;
-      if ()
       //automatic animation! You are welcome. thanks
       if(animate){
 
@@ -139,13 +127,31 @@ public class Maze{
 
           wait(20);
       }
+      if (maze[row][col] == 'E') return numAts;
+      maze[row][col] = '@';
+      numAts++;
       //dir = direction
-      int[] dirx = [1, 1, -1, -1];
-      int[] diry = [1, -1, 1, -1];
+      int[] dirx = {1, 1, -1, -1};
+      int[] diry = {1, -1, 1, -1};
       for (int x = 0; x < 4; x++){
-        if ()
+        int num = maze[dirx[x]][diry[x]];
+        if (num == ' ' || num == 'E'){
+          return solve(dirx[x], diry[x]);
+        }
+        else{
+          if (x == 3){
+            maze[row][col] = '.';
+            numAts--;
+          }
+          for (x = 0; x < 4; x++){
+            int num2 = maze[dirx[x]][diry[x]];
+            if (num2 == '@'){
+              return solve(dirx[x], diry[x]);
+            }
+          }
+        }
       }
-
+      return -1;
 
     }
 
