@@ -67,6 +67,17 @@ public class Maze{
       if (countS != 1) throw new IllegalStateException();
     }
 
+    public String toString(){
+      String str = "";
+      for (int x = 0; x < maze.length; x++){
+        for (int y = 0; y < maze[0].length; y++){
+          str += maze[x][y];
+        }
+        str += "\n";
+      }
+      return str;
+    }
+
 
     private void wait(int millis){
          try {
