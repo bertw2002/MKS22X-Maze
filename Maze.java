@@ -28,8 +28,28 @@ public class Maze{
       animate = false;
       Scanner scanner = new Scanner(filename);
       int row = 0;
-      while (scanner.hasNextLine())
-        //COMPLETE CONSTRUCTOR
+      int col = 0;
+      int countE = 0;
+      int countS = 0;
+      String nextline;
+      while (scanner.hasNextLine()){
+        nextline = scanner.nextLine();
+        col = nextline.length();
+        row++;
+      }
+      maze = new char[row][col];
+      while (scanner.hasNextLine()){
+        for (int x = 0; x < row; x++){
+          nextline = scanner.nextLine();
+          for (int y = 0; y < col; y++){
+            maze[x][y] = nextline.charAt(y);
+            if (maze[x][y] == 'E') countE++;
+            if (maze[x][y] == 'S') countS++;
+          }
+        }
+      }
+      if (countE > 1 || countE == 0) throw new IllegalStateException();
+      if (countS > 1 || countS == 0) throw new IllegalStateException();
     }
 
 
