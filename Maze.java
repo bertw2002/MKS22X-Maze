@@ -63,6 +63,7 @@ public class Maze{
         }
         x++;
       }
+      System.out.println ("E:" + Erow + Ecol + "S:" + Srow + Scol);
       if (countE != 1) throw new IllegalStateException();
       if (countS != 1) throw new IllegalStateException();
     }
@@ -144,22 +145,22 @@ public class Maze{
       maze[row][col] = '@';
       numAts++;
       //dir = direction
-      int[] dirx = {1, 1, -1, -1};
-      int[] diry = {1, -1, 1, -1};
+      int[] dirx = {1, -1, 0, 0};
+      int[] diry = {0, 0, -1, 1};
       for (int x = 0; x < 4; x++){
-        int num = maze[dirx[x]][diry[x]];
+        int num = maze[row + dirx[x]][col + diry[x]];
         if (num == ' ' || num == 'E'){
-          return solve(dirx[x], diry[x]);
+          return solve(row + dirx[x], col + diry[x]);
         }
         else{
           if (x == 3){
             maze[row][col] = '.';
             numAts--;
-          }
-          for (x = 0; x < 4; x++){
-            int num2 = maze[dirx[x]][diry[x]];
-            if (num2 == '@'){
-              return solve(dirx[x], diry[x]);
+            for (x = 3; x > -1; x--){
+              int num2 = maze[row + dirx[x]][col + diry[x]];
+              if (num2 == '@'){
+                return solve(row + dirx[x], col + diry[x]);
+              }
             }
           }
         }
