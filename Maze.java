@@ -142,14 +142,14 @@ public class Maze{
           wait(20);
       }
       if (maze[row][col] == 'E') return numAts;
-      maze[row][col] = '@';
-      numAts++;
       //dir = direction
       int[] dirx = {1, -1, 0, 0};
       int[] diry = {0, 0, -1, 1};
       for (int x = 0; x < 4; x++){
         int num = maze[row + dirx[x]][col + diry[x]];
         if (num == ' ' || num == 'E'){
+          maze[row][col] = '@';
+          numAts++;
           return solve(row + dirx[x], col + diry[x]);
         }
         else{
