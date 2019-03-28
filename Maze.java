@@ -10,6 +10,8 @@ public class Maze{
     private int Scol;
     private int Srow;
     private int numAts;
+    private int[] dirx = {1, -1, 0, 0};
+    private int[] diry = {0, 0, -1, 1};
     /*Constructor loads a maze text file, and sets animate to false by default.
 
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -63,7 +65,6 @@ public class Maze{
         }
         x++;
       }
-      System.out.println ("E:" + Erow + Ecol + "S:" + Srow + Scol);
       if (countE != 1) throw new IllegalStateException();
       if (countS != 1) throw new IllegalStateException();
     }
@@ -141,32 +142,59 @@ public class Maze{
 
           wait(20);
       }
-      if (maze[row][col] == 'E') return numAts;
-      //dir = direction
-      int[] dirx = {1, -1, 0, 0};
-      int[] diry = {0, 0, -1, 1};
-      for (int x = 0; x < 4; x++){
-        int num = maze[row + dirx[x]][col + diry[x]];
-        if (num == ' ' || num == 'E'){
-          maze[row][col] = '@';
-          numAts++;
-          return solve(row + dirx[x], col + diry[x]);
+      int moves = 0;
+      if (maze[row][col]=='E'){
+        for (int r = 0; r < maze.length; r++){
+          for (int c = 0; c < maze[0].length; c++){
+            if (maze[r][c] == '@'){
+              moves++;
+            }
+          }
+        }
+      }
+      for (int count= 0; count < dirx.length; count++){
+        char after = maze[row + dirx[count]][col+diry[count]];
+        if (after == 'E'){
+          for (int r = 0; r < maze.length; r++){
+            for (int c = 0; c < maze[0].length; c++){
+              if (maze[r][c] == '@'){
+                moves++;
+              }
+            }
+          }
+          return moves;
+        }
+        else if (after == ' '){
+          maze[dirx[count] + row][diry[count] + col] = '@';
+          moves++;
+          return solve(dirx[count] + row, diry[count] + col);
         }
         else{
-          if (x == 3){
-            maze[row][col] = '.';
-            numAts--;
-            for (x = 3; x > -1; x--){
-              int num2 = maze[row + dirx[x]][col + diry[x]];
-              if (num2 == '@'){
-                return solve(row + dirx[x], col + diry[x]);
+          if (count >= 3){
+            for (int x = 0; x < dirx.length; x++){
+              char before = maze[row + dirx[x]][col + diry[x]];
+              if (before == 'E'){
+                for (int r = 0; r < maze.length; r++){
+                  for (int c = 0; c < maze[0].length; c++){
+                    if (maze[r][c] == '@'){
+                      moves++;
+                    }
+                  }
+                }
+                return moves;
+              }
+              else if (before == '@'){
+                moves--;
+
+                maze[row][col] = '.';
+
+                return solve(dirx[x] + row, diry[x] + col);
               }
             }
           }
         }
       }
       return -1;
-
     }
 
 
